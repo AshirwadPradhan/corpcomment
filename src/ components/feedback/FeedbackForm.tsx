@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { MAX_CHARACTERS } from "../lib/constants";
-import { HeaderProps } from "../lib/types";
+import { MAX_CHARACTERS } from "../../lib/constants";
+import { HeaderProps } from "../../lib/types";
 
 function FeedbackForm({ handleAddFeedback }: HeaderProps) {
   const [feedback, setFeedback] = useState("");
