@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { MAX_CHARACTERS } from "../../lib/constants";
-import { HeaderProps } from "../../lib/types";
+import { useFeedbackItemsStore } from "../../stores/feedbackItemsStore";
 
-function FeedbackForm({ handleAddFeedback }: HeaderProps) {
+function FeedbackForm() {
+  const handleAddFeedback = useFeedbackItemsStore(
+    (state) => state.addItemsToList
+  );
   const [feedback, setFeedback] = useState("");
   const [showValidIndicator, setShowValidIndicator] = useState(false);
   const [showInvalidIndicator, setShowInvalidIndicator] = useState(false);
+
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     if (value.length > MAX_CHARACTERS) {

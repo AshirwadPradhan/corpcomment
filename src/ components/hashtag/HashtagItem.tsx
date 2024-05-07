@@ -1,14 +1,13 @@
 function HashtagItem({
   onClick,
   company,
-  key,
 }: {
   company: string;
   key: string;
   onClick: (company: string) => void;
 }) {
   return (
-    <li key={key}>
+    <li key={company}>
       <button onClick={() => onClick(company)}>#{company}</button>
     </li>
   );
