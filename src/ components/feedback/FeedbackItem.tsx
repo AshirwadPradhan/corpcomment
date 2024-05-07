@@ -12,7 +12,8 @@ function FeedbackItem({ feedbackItem }: FeedbackItemProps) {
 
   const handleUpvote = (e: React.MouseEvent<HTMLButtonElement>) => {
     setUpvoteCount((prev) => ++prev);
-    e?.stopPropagation();
+    e.currentTarget.disabled = true;
+    e.stopPropagation();
   };
 
   return (
