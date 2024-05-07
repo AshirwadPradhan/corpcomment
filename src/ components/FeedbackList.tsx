@@ -1,34 +1,29 @@
+import { useEffect, useState } from "react";
 import FeedbackItem from "./FeedbackItem";
-
-const feedbackItems = [
-  {
-    upvotes: 356,
-    badge: "T",
-    company: "Trello",
-    text: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo, officiis nam aperiam facilis beatae quam omnis architecto dicta quia repudiandae illo quasi tempora qui, ullam iusto culpa non voluptatibus necessitatibus?",
-    timeAgo: "2d",
-  },
-  {
-    upvotes: 356,
-    badge: "T",
-    company: "Trello",
-    text: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo, officiis nam aperiam facilis beatae quam omnis architecto dicta quia repudiandae illo quasi tempora qui, ullam iusto culpa non voluptatibus necessitatibus?",
-    timeAgo: "2d",
-  },
-  {
-    upvotes: 356,
-    badge: "T",
-    company: "Trello",
-    text: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo, officiis nam aperiam facilis beatae quam omnis architecto dicta quia repudiandae illo quasi tempora qui, ullam iusto culpa non voluptatibus necessitatibus?",
-    timeAgo: "2d",
-  },
-];
+import Spinner from "./Spinner";
 
 function FeedbackList() {
+  const [feedbackItems, setFeedbackItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch(
+      "https://bytegrad.com/course-assets/projects/corpcomment/api/feedbacks"
+    )
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setLoading(false);
+        setFeedbackItems(data.feedbacks);
+      });
+  }, []);
+
   return (
     <ol className="feedback-list">
+      {loading ? <Spinner /> : null}
       {feedbackItems.map((feedbackItem) => (
-        <FeedbackItem feedbackItem={feedbackItem} />
+        <FeedbackItem key={feedbackItem.id} feedbackItem={feedbackItem} />
       ))}
     </ol>
   );
