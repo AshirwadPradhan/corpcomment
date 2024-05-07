@@ -19,7 +19,7 @@ function FeedbackItem({ feedbackItem }: FeedbackItemProps) {
         <p>{feedbackItem.company}</p>
         <p>{feedbackItem.text}</p>
       </div>
-      <p>{feedbackItem.daysAgo}d</p>
+      <p>{feedbackItem.daysAgo === 0 ? "New" : `${feedbackItem.daysAgo}d`}</p>
     </li>
   );
 }

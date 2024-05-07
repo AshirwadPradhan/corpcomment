@@ -9,7 +9,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleAddFeedback = (newFeedback: string) => {
+  const handleAddFeedback = async (newFeedback: string) => {
     const company = newFeedback
       .split(" ")
       .find((word) => word.startsWith("#"))!
@@ -24,6 +24,17 @@ function App() {
       daysAgo: 0,
     };
     setFeedbackItems([newItem, ...feedbackItems]);
+
+    await fetch(
+      "https://bytegrad.com/course-assets/projects/corpcomment/api/feedbacks",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newItem),
+      }
+    );
   };
 
   useEffect(() => {
