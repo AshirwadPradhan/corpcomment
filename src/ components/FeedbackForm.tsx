@@ -5,6 +5,10 @@ function FeedbackForm() {
   const [feedback, setFeedback] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    if (value.length > MAX_CHARACTERS) {
+      return;
+    }
     setFeedback(e.target.value);
   };
 
