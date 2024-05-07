@@ -4,7 +4,8 @@ import { HeaderProps } from "../../lib/types";
 
 function FeedbackForm({ handleAddFeedback }: HeaderProps) {
   const [feedback, setFeedback] = useState("");
-
+  const [showValidIndicator, setShowValidIndicator] = useState(false);
+  const [showInvalidIndicator, setShowInvalidIndicator] = useState(false);
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     if (value.length > MAX_CHARACTERS) {
@@ -15,13 +16,31 @@ function FeedbackForm({ handleAddFeedback }: HeaderProps) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (feedback.includes("#") && feedback.length >= 5) {
+      setShowValidIndicator(true);
+      setTimeout(() => {
+        setShowValidIndicator(false);
+      }, 2000);
+    } else {
+      setShowInvalidIndicator(true);
+      setTimeout(() => {
+        setShowInvalidIndicator(false);
+      }, 2000);
+      return;
+    }
+
     handleAddFeedback(feedback);
     setFeedback("");
   };
 
   const charactersLeft = MAX_CHARACTERS - feedback.length;
   return (
-    <form className="form" onSubmit={handleSubmit}>
+    <form
+      className={`form ${showValidIndicator ? "form--valid" : ""} ${
+        showInvalidIndicator ? "form--invalid" : ""
+      }`}
+      onSubmit={handleSubmit}
+    >
       <textarea
         value={feedback}
         id="feedback-textarea"
