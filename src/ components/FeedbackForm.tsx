@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { MAX_CHARACTERS } from "../lib/constants";
+import { HeaderProps } from "../lib/types";
 
-function FeedbackForm() {
+function FeedbackForm({ handleAddFeedback }: HeaderProps) {
   const [feedback, setFeedback] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -12,9 +13,15 @@ function FeedbackForm() {
     setFeedback(e.target.value);
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleAddFeedback(feedback);
+    setFeedback("");
+  };
+
   const charactersLeft = MAX_CHARACTERS - feedback.length;
   return (
-    <form className="form">
+    <form className="form" onSubmit={handleSubmit}>
       <textarea
         value={feedback}
         id="feedback-textarea"

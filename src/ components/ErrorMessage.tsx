@@ -1,4 +1,4 @@
-function ErrorMessage({ message }: string) {
+function ErrorMessage({ message }: { message: string }) {
   return <div>{message}</div>;
 }
 
